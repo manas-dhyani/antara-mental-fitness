@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antara • Wellness Companion</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <h1>Antara</h1>
+          <p>Wellness companion</p>
+        </div>
+      </div>
+
+      <div class="nav">
+        <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+        <button class="nav-btn" data-view="journal">Journal</button>
+        <button class="nav-btn" data-view="chat">Chat</button>
+        <button class="nav-btn" data-view="insights">Insights</button>
+        <button class="nav-btn" data-view="auth">Auth</button>
+      </div>
+
+      <div class="status-card">
+        <span class="label">API</span>
+        <strong id="apiStatus">Not checked</strong>
+        <p id="userStatus">Signed out</p>
+      </div>
+
+      <button id="logoutBtn" class="ghost-btn">Log out</button>
+    </aside>
+
+    <main class="content">
+      <section id="dashboard" class="view active">
+        <div class="hero card">
+          <div>
+            <span class="eyebrow">Mental fitness workspace</span>
+            <h2>Track mood, journal thoughts, and chat with Antara.</h2>
+            <p>Connect the FastAPI backend and use the built-in sections to test login, journal entries, chat, and weekly insights.</p>
+          </div>
+          <div class="hero-grid">
+            <div class="metric">
+              <span>Token</span>
+              <strong id="tokenState">Absent</strong>
+            </div>
+            <div class="metric">
+              <span>Journal entries</span>
+              <strong id="journalCount">0</strong>
+            </div>
+            <div class="metric">
+              <span>Chat session</span>
+              <strong id="sessionState">New</strong>
+            </div>
+            <div class="metric">
+              <span>Insights</span>
+              <strong id="insightState">Idle</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Quick actions</h3>
+            <div class="button-row">
+              <button class="primary-btn" data-jump="journal">Write journal</button>
+              <button class="primary-btn" data-jump="chat">Open chat</button>
+              <button class="primary-btn" data-jump="insights">Load insights</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Connection setup</h3>
+            <label>Backend URL</label>
+            <input id="apiBase" type="text" placeholder="http://localhost:8000" />
+            <p class="hint">Update this if the API runs on a different host or port.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="auth" class="view">
+        <div class="grid-2">
+          <div class="card">
+            <h3>Sign in</h3>
+            <form id="loginForm" class="form-stack">
+              <input name="username" type="email" placeholder="Email" required />
+              <input name="password" type="password" placeholder="Password" required />
+              <button class="primary-btn" type="submit">Login</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Create account</h3>
+            <form id="registerForm" class="form-stack">
+              <input name="email" type="email" placeholder="Email" required />
+              <input name="username" type="text" placeholder="Username" required />
+              <input name="password" type="password" placeholder="Password" required />
+              <button class="primary-btn" type="submit">Register</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="journal" class="view">
+        <div class="grid-2">
+          <div class="card">
+            <h3>New journal entry</h3>
+            <form id="journalForm" class="form-stack">
+              <input name="title" type="text" placeholder="Title" required />
+              <textarea name="content" rows="8" placeholder="Write your thoughts..." required></textarea>
+              <div class="row">
+                <input name="mood_score" type="number" min="0" max="10" step="0.1" placeholder="Mood score 0–10" required />
+                <input name="tags" type="text" placeholder="Tags separated by commas" />
+              </div>
+              <button class="primary-btn" type="submit">Save entry</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h3>Your entries</h3>
+              <button id="refreshJournal" class="ghost-btn small">Refresh</button>
+            </div>
+            <div id="journalList" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="chat" class="view">
+        <div class="card chat-card">
+          <div class="card-head">
+            <h3>Chat with Antara</h3>
+            <span id="chatSession" class="pill">No session yet</span>
+          </div>
+          <div id="chatThread" class="chat-thread"></div>
+          <form id="chatForm" class="chat-form">
+            <input name="message" type="text" placeholder="Type your message..." required />
+            <button class="primary-btn" type="submit">Send</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="insights" class="view">
+        <div class="card">
+          <div class="card-head">
+            <h3>Weekly insights</h3>
+            <button id="loadInsights" class="ghost-btn small">Generate</button>
+          </div>
+          <div id="insightOutput" class="insight-panel"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>

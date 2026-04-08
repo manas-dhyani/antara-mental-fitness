@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+motor
+beanie
+python-jose[cryptography]
+passlib[bcrypt]
+langchain
+langchain-groq
+langchain-community
+langchain-huggingface
+sentence-transformers
+chromadb
+python-dotenv
+pydantic[email]
+httpx
+python-multipart
