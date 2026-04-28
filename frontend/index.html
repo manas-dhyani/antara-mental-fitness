@@ -21,6 +21,7 @@
         <button class="nav-btn active" data-view="dashboard">Dashboard</button>
         <button class="nav-btn" data-view="journal">Journal</button>
         <button class="nav-btn" data-view="chat">Chat</button>
+        <button class="nav-btn" data-view="breathing">Breathing</button>
         <button class="nav-btn" data-view="insights">Insights</button>
         <button class="nav-btn" data-view="auth">Auth</button>
       </div>
@@ -58,6 +59,14 @@
             <div class="metric">
               <span>Insights</span>
               <strong id="insightState">Idle</strong>
+            </div>
+            <div class="metric">
+              <span>Journal streak</span>
+              <strong id="journalStreak">0</strong>
+            </div>
+            <div class="metric">
+              <span>Breathing streak</span>
+              <strong id="breathingStreak">0</strong>
             </div>
           </div>
         </div>
@@ -138,8 +147,46 @@
           <div id="chatThread" class="chat-thread"></div>
           <form id="chatForm" class="chat-form">
             <input name="message" type="text" placeholder="Type your message..." required />
+            <button id="micBtn" class="ghost-btn" type="button" title="Record voice message">🎙️</button>
             <button class="primary-btn" type="submit">Send</button>
           </form>
+        </div>
+      </section>
+
+      <section id="breathing" class="view">
+        <div class="card">
+          <div class="card-head">
+            <h3>Breathing exercise</h3>
+            <span id="breathingStatus" class="pill">Ready</span>
+          </div>
+          <div class="grid-2">
+            <div class="breathing-panel card">
+              <div class="breathing-stage">
+                <div id="breathingOrb" class="breathing-orb"></div>
+                <div class="breathing-overlay">
+                  <div id="breathingCue" class="breathing-cue">Select a preset and press Start</div>
+                  <div id="breathingTimer" class="breathing-timer">00:00</div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Preset</h3>
+              <div class="form-stack">
+                <label class="meta">Choose a pattern</label>
+                <select id="breathingPreset" class="select">
+                  <option value="box">Box breathing (4-4-4-4)</option>
+                  <option value="478">4-7-8 breathing</option>
+                  <option value="calm">Calm (4-6)</option>
+                </select>
+                <div class="button-row">
+                  <button id="breathingStart" class="primary-btn" type="button">Start</button>
+                  <button id="breathingPause" class="ghost-btn" type="button">Pause</button>
+                  <button id="breathingReset" class="ghost-btn" type="button">Reset</button>
+                </div>
+                <div class="meta" id="breathingSteps">Inhale 4s • Hold 4s • Exhale 4s • Hold 4s</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -155,6 +202,46 @@
     </main>
   </div>
 
+  <div id="onboardingModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+    <div class="modal-card">
+      <div class="card-head">
+        <h3 id="onboardingTitle">Quick setup</h3>
+        <button id="onboardingClose" class="ghost-btn small" type="button">Not now</button>
+      </div>
+      <p class="hint">Optional. This stays on-device (localStorage) and only changes UI hints/presets.</p>
+      <form id="onboardingForm" class="form-stack">
+        <label class="meta">Main goal</label>
+        <select name="goal" class="select" required>
+          <option value="stress">Reduce stress</option>
+          <option value="anxiety">Manage anxiety</option>
+          <option value="focus">Improve focus</option>
+          <option value="sleep">Sleep better</option>
+        </select>
+        <label class="meta">Preferred tone</label>
+        <select name="tone" class="select" required>
+          <option value="gentle">Gentle</option>
+          <option value="direct">Direct</option>
+        </select>
+        <label class="meta">Time available</label>
+        <select name="time" class="select" required>
+          <option value="2">2 minutes</option>
+          <option value="5">5 minutes</option>
+          <option value="10">10 minutes</option>
+        </select>
+        <label class="meta">Comfort with voice input</label>
+        <select name="voice" class="select" required>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+        <div class="button-row">
+          <button class="primary-btn" type="submit">Save</button>
+          <button id="onboardingSkip" class="ghost-btn" type="button">Skip</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="tipDock" class="tip-dock"></div>
   <div id="toast" class="toast hidden"></div>
   <script src="app.js"></script>
 </body>

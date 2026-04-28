@@ -18,6 +18,16 @@ body {
   color: var(--text);
 }
 button, input, textarea { font: inherit; }
+.select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  outline: none;
+}
+.select option { background: #0f1630; }
 .shell {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -66,7 +76,7 @@ button, input, textarea { font: inherit; }
 .hero { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: start; margin-bottom: 20px; }
 .hero p { color: var(--muted); line-height: 1.6; }
 .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
-.hero-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.hero-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .metric { background: rgba(255,255,255,0.04); border: 1px solid var(--line); padding: 14px; border-radius: 18px; }
 .metric strong { display: block; margin-top: 6px; font-size: 1.1rem; }
 .form-stack, .chat-form { display: grid; gap: 12px; }
@@ -89,6 +99,14 @@ input::placeholder, textarea::placeholder { color: #7f89b6; }
 .chat-thread { flex: 1; overflow: auto; display: grid; gap: 12px; margin-bottom: 14px; }
 .bubble.user { justify-self: end; background: rgba(124,140,255,0.16); }
 .bubble.ai { justify-self: start; }
+.chat-form {
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+}
+#micBtn.active-rec {
+  border-color: rgba(255,107,107,0.55);
+  background: rgba(255,107,107,0.12);
+}
 .pill { padding: 8px 12px; border-radius: 999px; background: rgba(95,227,192,0.16); color: #baf4e6; border: 1px solid rgba(95,227,192,0.25); }
 .insight-panel { display: grid; gap: 12px; }
 .toast {
@@ -97,6 +115,97 @@ input::placeholder, textarea::placeholder { color: #7f89b6; }
   padding: 14px 16px; border-radius: 16px; box-shadow: var(--shadow);
 }
 .hidden { display: none; }
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 50;
+}
+.modal-card {
+  width: min(720px, 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+/* Tip dock */
+.tip-dock {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  width: min(420px, calc(100% - 36px));
+  display: grid;
+  gap: 10px;
+  z-index: 40;
+}
+.tip {
+  background: #0f1630;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+.tip-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.tip-actions { margin-top: 10px; }
+.tip-x { padding: 6px 10px; border-radius: 12px; }
+
+/* Breathing */
+.breathing-panel { position: relative; overflow: hidden; }
+.breathing-stage {
+  position: relative;
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: radial-gradient(circle at 30% 20%, rgba(124,140,255,0.18), rgba(255,255,255,0.02));
+  border: 1px solid var(--line);
+}
+.breathing-orb {
+  --orb-scale: 1;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, rgba(95,227,192,0.95), rgba(124,140,255,0.85));
+  filter: blur(0px);
+  transform: scale(var(--orb-scale));
+  transition: transform 900ms ease, filter 900ms ease;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+}
+.breathing-orb.inhale { filter: saturate(1.08) brightness(1.05); }
+.breathing-orb.exhale { filter: saturate(0.95) brightness(0.98); }
+.breathing-orb.hold { filter: saturate(1.02); }
+.breathing-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 18px;
+}
+.breathing-cue {
+  font-size: 1.05rem;
+  color: var(--text);
+}
+.breathing-timer {
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+  color: rgba(233,236,255,0.95);
+}
+
 @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 980px) {
   .shell, .hero, .grid-2 { grid-template-columns: 1fr; }

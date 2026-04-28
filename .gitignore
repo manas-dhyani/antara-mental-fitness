@@ -1,0 +1,14 @@
+# Node dependencies
+node_modules/
+.next/
+dist/
+.env
+frontend-react/node_modules
+# Python dependencies
+__pycache__/
+.venv/
+env/
+.env
+
+# Misc
+.DS_Store

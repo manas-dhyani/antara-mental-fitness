@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from db.mongo import init_db
-from routes import auth, journal, chat, insights # Added chat and insights
+from routes import auth, journal, chat, insights, voice # Added chat and insights
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -24,6 +24,7 @@ app.include_router(auth.router)
 app.include_router(journal.router)
 app.include_router(chat.router)
 app.include_router(insights.router)
+app.include_router(voice.router)
 
 @app.get("/")
 async def health_check():

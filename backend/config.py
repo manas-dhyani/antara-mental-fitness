@@ -5,6 +5,8 @@ load_dotenv()
 
 class Settings(BaseSettings):
     GROQ_API_KEY: str
+    GROQ_STT_MODEL: str = "whisper-large-v3-turbo"
+    GROQ_STT_LANGUAGE: str | None = None
     MONGODB_URI: str
     MONGODB_DB_NAME: str
     JWT_SECRET: str

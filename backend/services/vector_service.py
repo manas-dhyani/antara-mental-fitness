@@ -7,6 +7,19 @@ class VectorService:
         self.api_url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{settings.EMBEDDING_MODEL}"
         self.headers = {"Authorization": f"Bearer {settings.HUGGINGFACE_API_KEY}"}
         logging.info("🚀 Vector Service switched to API-based mode (No Torch required)")
+
+    async def upsert_journal(self, user_id: str, journal_id: str, content: str, metadata: dict) -> None:
+        """
+        Compatibility shim for routes that expect vector_service.upsert_journal(...).
+        This is intentionally best-effort: failures should not break journaling.
+        """
+        try:
+            safe_meta = dict(metadata or {})
+            safe_meta.setdefault("user_id", user_id)
+            safe_meta.setdefault("journal_id", journal_id)
+            await self.add_to_vector_store(content, safe_meta)
+        except Exception as e:
+            logging.warning(f"upsert_journal failed (ignored): {e}")
     async def query_journals(self, user_id: str, query: str):
         """
         Searches for relevant journal entries. 
